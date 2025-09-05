@@ -30,9 +30,12 @@ document.querySelectorAll('#navMenu a').forEach(link => {
 function scrollToSection(sectionId, extraOffset = 20) {
     const section = document.getElementById(sectionId);
     if (section) {
-        const headerHeight = document.querySelector('.header').offsetHeight;
+        const header = document.querySelector('.header');
+        const headerHeight = header ? header.offsetHeight : 0;
         const targetPosition = section.offsetTop - headerHeight - extraOffset;
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    } else {
+        console.error('Section not found:', sectionId);
     }
 }
 
@@ -130,15 +133,7 @@ document.getElementById('audioFile').addEventListener('change', function(e) {
     }
 });
 
-function scrollToSection(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-// чтобы кнопка в шапке тоже скроллила:
-document.addEventListener('DOMContentLoaded', () => {
-  const navBtn = document.querySelector('.nav-menu .btn.btn-outline');
-  if (navBtn) navBtn.addEventListener('click', () => scrollToSection('demo'));
-});
+// Удаляем дублирующую функцию - используем уже существующую scrollToSection
 
 
 // Notification system
@@ -177,6 +172,24 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hero buttons - alternative to onclick
+    const demoBtn = document.querySelector('.hero-buttons .btn-primary');
+    const auditBtn = document.querySelector('.hero-buttons .btn-secondary');
+    
+    if (demoBtn) {
+        demoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToSection('demo');
+        });
+    }
+    
+    if (auditBtn) {
+        auditBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToSection('audit');
+        });
+    }
+    
     // Hero video
     const heroVideo = document.querySelector('.hero-visual video.lazy-video');
     if (heroVideo) {
