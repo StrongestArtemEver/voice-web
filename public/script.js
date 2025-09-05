@@ -71,44 +71,42 @@ document.getElementById('demoForm').addEventListener('submit', async function(e)
     const formData = new FormData(this);
     const data = Object.fromEntries(formData);
     try {
-        const response = await fetch('/demo-request', {
+        const response = await fetch('/api/send-demo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
         const result = await response.json();
-        if (result.success) {
-            showNotification(result.message, 'success');
+        if (result.ok) {
+            showNotification('Заявка на демо отправлена!', 'success');
             this.reset();
         } else {
-            showNotification('Произошла ошибка. Попробуйте еще раз.', 'error');
+            showNotification('Ошибка отправки. Проверьте данные и попробуйте снова.', 'error');
         }
     } catch (error) {
         console.error('Error:', error);
-        showNotification('Произошла ошибка. Попробуйте еще раз.', 'error');
+        showNotification('Ошибка сети. Попробуйте еще раз.', 'error');
     }
 });
 
 document.getElementById('auditForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
     try {
-        const response = await fetch('/audit-request', {
+        const response = await fetch('/api/send-audit', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         });
         const result = await response.json();
-        if (result.success) {
-            showNotification(result.message, 'success');
+        if (result.ok) {
+            showNotification('Файл отправлен на аудит!', 'success');
             this.reset();
         } else {
-            showNotification('Произошла ошибка. Попробуйте еще раз.', 'error');
+            showNotification('Ошибка отправки. Проверьте данные и попробуйте снова.', 'error');
         }
     } catch (error) {
         console.error('Error:', error);
-        showNotification('Произошла ошибка. Попробуйте еще раз.', 'error');
+        showNotification('Ошибка сети. Попробуйте еще раз.', 'error');
     }
 });
 
