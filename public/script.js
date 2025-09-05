@@ -130,6 +130,17 @@ document.getElementById('audioFile').addEventListener('change', function(e) {
     }
 });
 
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// чтобы кнопка в шапке тоже скроллила:
+document.addEventListener('DOMContentLoaded', () => {
+  const navBtn = document.querySelector('.nav-menu .btn.btn-outline');
+  if (navBtn) navBtn.addEventListener('click', () => scrollToSection('demo'));
+});
+
+
 // Notification system
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
