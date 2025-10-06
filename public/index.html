@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="ИИ слушает 100% звонков, находит ошибки по 22 критериям и даёт готовые фразы. Отчёт по вашему звонку за 24 часа. +18–35% к выручке без найма.">
+    <meta property="og:title" content="SmartLab — ИИ-контроль звонков">
+    <meta property="og:description" content="Отчёт по вашему звонку за 24 часа. +18–35% к выручке.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hello.smart-lab.app/">
+    <link rel="icon" href="/favicon.ico">
+
 </head>
 <body>
     <!-- Header -->
@@ -26,32 +33,49 @@
                         </svg>
                     </div>
                     <a href="#home">Главная</a>
-                    <a href="#features">Преимущества</a>
-                    <a href="#service">Сервис</a>
-                    <a href="#testimonial">О сервисе</a>
-                    <button class="btn btn-outline">Заказать демонстрацию</button>
+                    <a href="#pain">С чем поможем</a>
+                    <a href="#solution">Как работает</a>
+                    <a href="#faq">FAQ</a>
+                    <button class="btn btn-outline" onclick="scrollToSection('contact')">Начать бесплатно</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Оффер -->
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        +18–35% к выручке без рекламы. ИИ-контроль 100% звонков
+                        Увеличьте выручку на 18-35% с помощью ИИ-анализа звонков — без найма новых менеджеров
                     </h1>
-                    <p class="hero-subtitle">
-                        Бесплатный аудит одного звонка и демо 20 минут
-                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="#36B37E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Бесплатный анализ звонка за 24 часа</span>
+                        </div>
+                        <div class="hero-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="#36B37E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>20-минутное демо на ваших звонках</span>
+                        </div>
+                        <div class="hero-feature-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="#36B37E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Отчёт с точками роста прямо сейчас</span>
+                        </div>
+                    </div>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('demo')">
-                            Записаться на демо
+                        <button class="btn btn-primary" onclick="scrollToSection('contact')">
+                            Получить анализ за 24 часа
                         </button>
-                        <button class="btn btn-secondary" onclick="scrollToSection('audit')">
-                            Бесплатный анализ звонка
+                        <button class="btn btn-secondary" onclick="scrollToSection('demo-video')">
+                            Смотреть демо 90 секунд
                         </button>
                     </div>
                 </div>
@@ -66,243 +90,191 @@
         </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Pain Points Section - Боль -->
+    <section id="pain" class="pain-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ваши менеджеры теряют сделки ?</h2>
+                <p class="section-description">
+                    <span style="text-decoration: underline; text-decoration-color: #FF9C9C; text-decoration-thickness: 2px; text-underline-offset: 5px;">Без систематического контроля звонков вы не знаете, где теряется прибыль</span>
+                </p>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#FFE5E5"/>
+                            <path d="M24 16V26M24 30H24.01" stroke="#FF5252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Нет контроля качества</h3>
+                    <p>Прослушиваете 2-3 звонка в день вместо 100+. Не знаете, соблюдают ли менеджеры скрипты и работают ли с возражениями</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#FFE5E5"/>
+                            <path d="M24 16V26M24 30H24.01" stroke="#FF5252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Теряете клиентов</h3>
+                    <p>20-40% звонков заканчиваются отказом из-за ошибок менеджеров. Вы узнаёте об этом слишком поздно — когда клиент уже ушёл</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#FFE5E5"/>
+                            <path d="M24 16V26M24 30H24.01" stroke="#FF5252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Нет данных для роста</h3>
+                    <p>Не понимаете, какие фразы работают, а какие убивают сделку. Обучение менеджеров идёт вслепую</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#FFE5E5"/>
+                            <path d="M24 16V26M24 30H24.01" stroke="#FF5252" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Тратите часы на ручной анализ</h3>
+                    <p>Руководитель тратит 10-15 часов в неделю на прослушивание звонков. Это время можно потратить на развитие бизнеса</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Section - Скринкаст -->
+    <section id="demo-video" class="demo-video-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Как это работает</span>
+                <h2 class="section-title">Смотрите, как SmartLab анализирует звонки за 3 секунды</h2>
+                <p class="section-description">
+                    <span style="text-decoration: underline; text-decoration-color: #7FD1A8; text-decoration-thickness: 2px; text-underline-offset: 5px;">Реальный пример: загружаем звонок → получаем детальный отчёт с ошибками и рекомендациями</span>
+                </p>
+            </div>
+            <div class="demo-video-container">
+                <!-- Здесь будет скринкаст работы сервиса -->
+                <div class="video-placeholder">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <circle cx="40" cy="40" r="40" fill="#1565d8" opacity="0.1"/>
+                        <path d="M32 25L55 40L32 55V25Z" fill="#1565d8"/>
+                    </svg>
+                    <p>Видео-демонстрация сервиса</p>
+                </div>
+                <!-- <video controls poster="demo-poster.jpg">
+                    <source src="demo-screencast.mp4" type="video/mp4">
+                </video> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section - Решение -->
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Решение</span>
+                <h2 class="section-title">SmartLab анализирует каждый звонок и выдаёт готовый план действий</h2>
+                <p class="section-description">
+                    <span style="text-decoration: underline; text-decoration-color: #7FD1A8; text-decoration-thickness: 2px; text-underline-offset: 5px;">Искусственный интеллект работает 24/7 — проверяет качество, находит ошибки и даёт рекомендации вашим менеджерам</span>
+                </p>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="solution-number">01</div>
+                    <div class="solution-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#E8F5FF"/>
+                            <path d="M24 14V24L30 30" stroke="#1565d8" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Проверка 100% звонков</h3>
+                    <p>ИИ слушает все звонки и проверяет 22 критерия: приветствие, работа с возражениями, соблюдение скрипта, эмоции клиента. Вы получаете отчёт за 3 секунды</p>
+                    <div class="solution-result">
+                        <strong>Результат:</strong> экономите 10-15 часов в неделю на ручной проверке
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-number">02</div>
+                    <div class="solution-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#E8F5FF"/>
+                            <path d="M16 24L22 30L32 18" stroke="#1565d8" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Готовые рекомендации</h3>
+                    <p>Система находит ошибки и сразу даёт готовые фразы для менеджеров: "Используйте эту формулировку", "Задайте этот вопрос". Не нужно думать, что исправить</p>
+                    <div class="solution-result">
+                        <strong>Результат:</strong> конверсия растёт на 20-35% за первый месяц
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-number">03</div>
+                    <div class="solution-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="24" fill="#E8F5FF"/>
+                            <path d="M18 24L24 18L30 24M24 18V34" stroke="#1565d8" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Рост выручки без вложений</h3>
+                    <p>Не нужно нанимать новых менеджеров или тратиться на рекламу. Работаете с текущей командой и увеличиваете выручку на 18-35%</p>
+                    <div class="solution-result">
+                        <strong>Результат:</strong> +500 000 - 2 000 000₽ дополнительной выручки в месяц
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Преимущества</h2>
-                <p class="section-description">
-                    Преобразуйте свой call-центр с помощью аналитики на основе искусственного интеллекта, повышая эффективность и максимизируя потенциальный доход без особых усилий.
-                </p>
+                <h2 class="section-title">Что именно проверяет SmartLab в каждом звонке</h2>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-asterisk"></i>
+                        <i class="fas fa-check-circle"></i>
                     </div>
-                    <h3>Автопроверка</h3>
-                    <p>Автоматически проверяет 22 критерия, эмоции и скрипты, обеспечивая качество и соответствие требованиям при каждом взаимодействии.</p>
+                    <h3>Соблюдение скрипта</h3>
+                    <p>Проверяем, прошёл ли менеджер все этапы продаж: приветствие, выявление потребностей, презентация, закрытие возражений, завершение</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bahai"></i>
+                        <i class="fas fa-smile"></i>
                     </div>
-                    <h3>Рекомендации</h3>
-                    <p>Предоставьте менеджерам патчи скриптов и готовые к использованию фразы, повышая производительность команды и удовлетворенность клиентов.</p>
+                    <h3>Эмоции клиента</h3>
+                    <p>Анализируем тон голоса: заинтересован клиент или раздражён. Даём рекомендации, как изменить подход в реальном времени</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-certificate"></i>
+                        <i class="fas fa-ban"></i>
                     </div>
-                    <h3>Рост продаж</h3>
-                    <p>Испытайте значительный рост продаж, от 18% до 35% с нашим сервисом.</p>
+                    <h3>Работа с возражениями</h3>
+                    <p>Находим моменты, где менеджер упустил возражение или ответил неправильно. Подсказываем, какую фразу использовать</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Service Section -->
-    <section id="service" class="service">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Повышение производительности вызовов</h2>
-                <p class="section-description">
-                    Преобразуйте свой call-центр с помощью аналитики на основе искусственного интеллекта, повышая эффективность и максимизируя потенциальный доход без особых усилий.
-                </p>
-            </div>
-            <div class="service-content">
-                <div class="service-columns">
-                    <div class="service-col">
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Эффективность</h3>
-                            <p>Автоматизируйте анализ вызовов, экономя время и ресурсы, обеспечивая при этом стабильное качество всех взаимодействий.</p>
-                        </div>
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Согласие</h3>
-                            <p>Обеспечьте соблюдение нормативных стандартов с помощью автоматизированного мониторинга, минимизируя риски и эффективно поддерживая репутацию бренда.</p>
-                        </div>
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Идеи</h3>
-                            <p>Получайте полезную информацию из каждого звонка, выявляйте тенденции и возможности для повышения производительности и удовлетворенности клиентов.</p>
-                        </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stopwatch"></i>
                     </div>
-
-                    <div class="service-image">
-                        <img loading="lazy" src="man.jpeg" alt="Service Image">
-                    </div>
-
-                    <div class="service-col">
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Персонализация</h3>
-                            <p>Настраивайте взаимодействие с помощью персонализированных рекомендаций, повышая вовлеченность клиентов и повышая коэффициент конверсии.</p>
-                        </div>
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Оптимизация</h3>
-                            <p>Оптимизируйте стратегии звонков с помощью обратной связи в режиме реального времени, адаптируйтесь к потребностям клиентов и эффективно увеличивайте доход прямо сейчас.</p>
-                        </div>
-                        <div class="service-feature">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="4" fill="#FAAD13"></circle>
-                                </svg>
-                            </div>
-                            <h3>Тренировка</h3>
-                            <p>Определите потребности в обучении с помощью аналитики на основе данных, что позволит операторам быстро преуспеть и обеспечить исключительное качество обслуживания клиентов.</p>
-                        </div>
-                    </div>
+                    <h3>Длительность этапов</h3>
+                    <p>Показываем, сколько времени ушло на каждый этап. Если менеджер затянул с приветствием — даём рекомендацию</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Platform Section -->
-    <section id="testimonial" class="platform">
-        <div class="container">
-            <div class="platform-content">
-                <div class="platform-images">
-                    <div class="platform-image">
-                        <img src="phone1.jpeg" alt="Platform Image 1">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
                     </div>
-                    <div class="platform-image">
-                        <img src="phone2.jpeg" alt="Platform Image 2">
+                    <h3>Критические ошибки</h3>
+                    <p>Фиксируем грубые нарушения: хамство, забытые вопросы, неправильная информация. Отправляем уведомление руководителю</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                </div>
-                <div class="platform-text">
-                    <h2 class="section-title">О сервисе «Контроль звонков»</h2>
-                    <p class="section-description">
-                        Мы трансформируем call-центры с помощью искусственного интеллекта, увеличивая доходы и обеспечивая соответствие нормативным требованиям.
-                    </p>
-                    <div class="platform-features">
-                        <div class="platform-feature">
-                            <div class="feature-icon">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <h3>КОМУ</h3>
-                            <p>Анализ звонков на основе искусственного интеллекта для получения полезной информации и повышения производительности прямо сейчас.</p>
-                        </div>
-                        <div class="platform-feature">
-                            <div class="feature-icon">
-                                <i class="fas fa-pencil-ruler"></i>
-                            </div>
-                            <h3>Данные</h3>
-                            <p>Глубокий анализ данных для выявления паттернов и оптимизации процессов продаж.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Demo Section -->
-    <section id="demo" class="demo">
-        <div class="container">
-            <div class="demo-content">
-                <div class="demo-text">
-                    <h2 class="section-title">Демо 20 минут</h2>
-                    <p class="demo-description">
-                        Разберём реальные звонки, покажем ошибки и точки роста
-                    </p>
-                    <ul class="demo-features">
-                        <li>Конверсия по воронке продаж</li>
-                        <li>Детальный анализ эмоций</li>
-                        <li>Быстрые рекомендации по улучшению</li>
-                        <li>Персональный план развития</li>
-                    </ul>
-                </div>
-                <div class="demo-form">
-                    <form id="demoForm" class="form">
-                        <h3>Записаться на демо</h3>
-                        <div class="form-group">
-                            <input type="text" id="demoName" name="name" placeholder="Ваше имя" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="demoCompany" name="company" placeholder="Название компании" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="demoEmail" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="demoPhone" name="phone" placeholder="Телефон" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Отправить заявку</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Audit Section -->
-    <section id="audit" class="audit">
-        <div class="container">
-            <div class="audit-content">
-                <div class="audit-text">
-                    <h2 class="section-title">Бесплатный анализ звонка</h2>
-                    <p class="audit-description">
-                        Отчёт за 24 часа: 22 критерия, эмоции, персональные рекомендации
-                    </p>
-                    <div class="audit-limit">
-                        <span class="limit-badge">Только 10 аудитов в неделю</span>
-                    </div>
-                    <div class="audit-features">
-                        <div class="feature-item">
-                            <span class="feature-number">22</span>
-                            <span class="feature-text">критерия анализа</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-number">24ч</span>
-                            <span class="feature-text">время готовности</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="feature-number">100%</span>
-                            <span class="feature-text">бесплатно</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="audit-form">
-                    <form id="auditForm" class="form">
-                        <h3>Загрузить звонок для анализа</h3>
-                        <div class="form-group">
-                            <input type="email" id="auditEmail" name="email" placeholder="Email для отчёта" required>
-                        </div>
-                        <div class="form-group file-upload">
-                            <label for="audioFile" class="file-label">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                <span>Выберите файл (MP3/WAV)</span>
-                            </label>
-                            <input type="file" id="audioFile" name="audio" accept=".mp3,.wav" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="auditComment" name="comment" placeholder="Комментарий (необязательно)" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Отправить на анализ</button>
-                    </form>
+                    <h3>Динамика роста</h3>
+                    <p>Сравниваем показатели менеджеров за неделю/месяц. Видите, кто растёт, а кому нужна дополнительная помощь</p>
                 </div>
             </div>
         </div>
@@ -311,11 +283,11 @@
     <!-- Case Study Section -->
     <section class="case-study">
         <div class="container">
-            <h2 class="section-title">Кейс: рост выручки на 24%</h2>
+            <h2 class="section-title">Реальный кейс: рост выручки на 24% за 2 месяца</h2>
             <div class="case-content">
                 <div class="case-description">
                     <p>
-                        SaaS-команда увеличила конверсию встреч → сделка с 28% до 36%
+                        SaaS-компания увеличила конверсию встреч → сделка с 28% до 36%, используя SmartLab для анализа каждого звонка
                     </p>
                 </div>
                 <div class="case-metrics">
@@ -336,6 +308,174 @@
                         <div class="metric-label">повторные звонки</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">FAQ</span>
+                <h2 class="section-title">Частые вопросы о SmartLab</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Как быстро можно запустить систему?</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Интеграция занимает 1-3 дня. Мы подключаемся к вашей АТС, настраиваем критерии оценки под ваш бизнес и обучаем команду работе с системой. На 4-й день вы уже получаете первые отчёты.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Какие АТС поддерживаются?</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Мы работаем с любыми современными АТС: Asterisk, MegaFon, Beeline, МТС, Манго, Zadarma, Zoom, Avaya и другие. Если у вас нестандартная система — напишите, мы найдём решение.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Нужно ли устанавливать дополнительное ПО?</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Нет. SmartLab работает в облаке — вам не нужно ничего устанавливать. Достаточно браузера для доступа к интерфейсу и API для интеграции с вашей АТС.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Можно ли настроить свои критерии оценки?</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, полностью. У нас есть 22 стандартных критерия, но вы можете добавить свои: специфичные вопросы, этапы скрипта, обязательные фразы. Настройка занимает 10-15 минут.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Сколько звонков система может обработать?</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Без ограничений. Наши клиенты обрабатывают от 50 до 50 000+ звонков в день. Система масштабируется автоматически под любую нагрузку.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Начните прямо сейчас</span>
+                <h2 class="section-title">Получите бесплатный анализ звонка за 24 часа</h2>
+                <p class="section-description">
+                    Загрузите один звонок или запишитесь на 20-минутное демо. Мы покажем, как увеличить вашу выручку на 18-35%
+                </p>
+                <div class="urgency-container">
+                    <div class="urgency-badge">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="#FF6B6B" stroke-width="2" fill="none"/>
+                            <path d="M12 6V12L16 14" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <div class="urgency-text">
+                            <span class="urgency-main">Осталось 3 места со скидкой 10%</span>
+                            <span class="urgency-deadline">Предложение действует до 12 октября</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="unified-form-container">
+                <div class="form-type-selector">
+                    <label class="form-type-option active" data-type="audit">
+                        <input type="radio" name="formType" value="audit" checked>
+                        <div class="option-content">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="24" fill="#E8F5FF"/>
+                                <path d="M16 24L22 30L32 18" stroke="#1565d8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <div class="option-text">
+                                <h4>Бесплатный анализ звонка</h4>
+                                <p>Отчёт за 24 часа с рекомендациями</p>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="form-type-option" data-type="demo">
+                        <input type="radio" name="formType" value="demo">
+                        <div class="option-content">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="24" fill="#E8F5FF"/>
+                                <path d="M18 24L24 18L30 24M24 18V34" stroke="#1565d8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <div class="option-text">
+                                <h4>Демо на ваших звонках</h4>
+                                <p>20 минут — покажем систему в деле</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <form id="unifiedForm" class="unified-form">
+                    <!-- Общие поля -->
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Телефон" required>
+                    </div>
+
+                    <!-- Поля для анализа звонка -->
+                    <div id="auditFields" class="conditional-fields">
+                        <div class="form-group file-upload">
+                            <label for="audioFile" class="file-label">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span id="fileLabel">Загрузите звонок (MP3/WAV, до 50 МБ)</span>
+                            </label>
+                            <input type="file" id="audioFile" name="audio" accept=".mp3,.wav">
+                        </div>
+                        <div class="form-features">
+                            <span>✓ 22 критерия анализа</span>
+                            <span>✓ Готовые рекомендации</span>
+                            <span>✓ Анализ эмоций</span>
+                        </div>
+                    </div>
+
+                    <!-- Поля для демо -->
+                    <div id="demoFields" class="conditional-fields" style="display: none;">
+                        <div class="form-features">
+                            <span>✓ Анализ ваших звонков</span>
+                            <span>✓ Расчёт потенциала</span>
+                            <span>✓ План внедрения</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                        Получить анализ за 24 часа
+                    </button>
+                    <small class="form-note" id="formNote">Отчёт придёт на email в течение 24 часов</small>
+                </form>
             </div>
         </div>
     </section>

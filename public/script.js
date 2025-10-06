@@ -57,32 +57,93 @@ document.querySelectorAll('#navMenu a').forEach(link => {
     });
 });
 
-// Make "Заказать демонстрацию" button scroll to #demo
+// Make "Начать бесплатно" button scroll to #contact
 const navDemoBtn = document.querySelector('#navMenu .btn.btn-outline');
 if (navDemoBtn) {
     navDemoBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        scrollToSection('demo', 20);
+        scrollToSection('contact', 20);
         navMenu.classList.remove('active');
         document.body.classList.remove('no-scroll');
     });
 }
 
-// Form submission handlers
-document.getElementById('demoForm').addEventListener('submit', async function(e) {
+// Form type switcher
+document.querySelectorAll('.form-type-option').forEach(option => {
+    option.addEventListener('click', function() {
+        const formType = this.dataset.type;
+        const radioInput = this.querySelector('input[type="radio"]');
+        
+        // Update active state
+        document.querySelectorAll('.form-type-option').forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        radioInput.checked = true;
+        
+        // Toggle fields
+        const auditFields = document.getElementById('auditFields');
+        const demoFields = document.getElementById('demoFields');
+        const submitBtn = document.getElementById('submitBtn');
+        const formNote = document.getElementById('formNote');
+        const audioFile = document.getElementById('audioFile');
+        const company = document.getElementById('company');
+        const callVolume = document.getElementById('callVolume');
+        
+        if (formType === 'audit') {
+            auditFields.style.display = 'block';
+            demoFields.style.display = 'none';
+            submitBtn.textContent = 'Получить анализ за 24 часа';
+            formNote.textContent = 'Отчёт придёт на email в течение 24 часов';
+            audioFile.setAttribute('required', '');
+            company.removeAttribute('required');
+            callVolume.removeAttribute('required');
+        } else {
+            auditFields.style.display = 'none';
+            demoFields.style.display = 'block';
+            submitBtn.textContent = 'Записаться на демо';
+            formNote.textContent = 'Перезвоним в течение 2 часов';
+            audioFile.removeAttribute('required');
+            company.setAttribute('required', '');
+            callVolume.setAttribute('required', '');
+        }
+    });
+});
+
+// Unified form submission
+document.getElementById('unifiedForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    const formType = document.querySelector('input[name="formType"]:checked').value;
     const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
+    
     try {
-        const response = await fetch('/api/send-demo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
+        let response;
+        if (formType === 'audit') {
+            // Send as multipart for file upload
+            response = await fetch('/api/send-audit', {
+                method: 'POST',
+                body: formData
+            });
+        } else {
+            // Send as JSON for demo
+            const data = Object.fromEntries(formData);
+            delete data.audio; // Remove file field for demo
+            response = await fetch('/api/send-demo', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        }
+        
         const result = await response.json();
         if (result.ok) {
-            showNotification('Заявка на демо отправлена!', 'success');
+            const message = formType === 'audit' ? 
+                'Файл отправлен! Отчёт придёт в течение 24 часов' : 
+                'Заявка принята! Перезвоним в течение 2 часов';
+            showNotification(message, 'success');
             this.reset();
+            // Reset file label
+            const fileLabel = document.getElementById('fileLabel');
+            if (fileLabel) fileLabel.textContent = 'Загрузите звонок (MP3/WAV, до 50 МБ)';
         } else {
             showNotification('Ошибка отправки. Проверьте данные и попробуйте снова.', 'error');
         }
@@ -91,49 +152,6 @@ document.getElementById('demoForm').addEventListener('submit', async function(e)
         showNotification('Ошибка сети. Попробуйте еще раз.', 'error');
     }
 });
-
-document.getElementById('auditForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    try {
-        const response = await fetch('/api/send-audit', {
-            method: 'POST',
-            body: formData
-        });
-        const result = await response.json();
-        if (result.ok) {
-            showNotification('Файл отправлен на аудит!', 'success');
-            this.reset();
-        } else {
-            showNotification('Ошибка отправки. Проверьте данные и попробуйте снова.', 'error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        showNotification('Ошибка сети. Попробуйте еще раз.', 'error');
-    }
-});
-
-// File upload validation
-document.getElementById('audioFile').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const allowedTypes = ['audio/mp3', 'audio/wav', 'audio/mpeg'];
-    const maxSize = 50 * 1024 * 1024; // 50MB
-    if (file) {
-        if (!allowedTypes.includes(file.type)) {
-            showNotification('Пожалуйста, выберите файл в формате MP3 или WAV.', 'error');
-            this.value = '';
-            return;
-        }
-        if (file.size > maxSize) {
-            showNotification('Размер файла не должен превышать 50MB.', 'error');
-            this.value = '';
-            return;
-        }
-        showNotification('Файл успешно загружен!', 'success');
-    }
-});
-
-// Удаляем дублирующую функцию - используем уже существующую scrollToSection
 
 
 // Notification system
@@ -179,14 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (demoBtn) {
         demoBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            scrollToSection('demo');
+            scrollToSection('contact');
         });
     }
     
     if (auditBtn) {
         auditBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            scrollToSection('audit');
+            scrollToSection('demo-video');
         });
     }
     
@@ -243,4 +261,49 @@ window.addEventListener('scroll', () => {
         });
         ticking = true;
     }
-}); 
+});
+
+// FAQ Accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+        // Close other open items
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+            if (otherItem !== item && otherItem.classList.contains('active')) {
+                otherItem.classList.remove('active');
+            }
+        });
+        // Toggle current item
+        item.classList.toggle('active');
+    });
+});
+
+// File upload label update
+const audioFileInput = document.getElementById('audioFile');
+if (audioFileInput) {
+    audioFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const fileLabel = document.getElementById('fileLabel');
+        const allowedTypes = ['audio/mp3', 'audio/wav', 'audio/mpeg'];
+        const maxSize = 50 * 1024 * 1024; // 50MB
+        
+        if (file) {
+            if (!allowedTypes.includes(file.type)) {
+                showNotification('Пожалуйста, выберите файл в формате MP3 или WAV.', 'error');
+                this.value = '';
+                if (fileLabel) fileLabel.textContent = 'Загрузите звонок (MP3/WAV, до 50 МБ)';
+                return;
+            }
+            if (file.size > maxSize) {
+                showNotification('Размер файла не должен превышать 50MB.', 'error');
+                this.value = '';
+                if (fileLabel) fileLabel.textContent = 'Загрузите звонок (MP3/WAV, до 50 МБ)';
+                return;
+            }
+            if (fileLabel) {
+                fileLabel.textContent = `✓ ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} МБ)`;
+            }
+            showNotification('Файл готов к отправке!', 'success');
+        }
+    });
+} 
