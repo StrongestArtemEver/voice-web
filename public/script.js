@@ -58,13 +58,15 @@ document.querySelectorAll('#navMenu a').forEach(link => {
 });
 
 // Make "Начать бесплатно" button scroll to #contact
-const navDemoBtn = document.querySelector('#navMenu .btn.btn-outline');
-if (navDemoBtn) {
-    navDemoBtn.addEventListener('click', (e) => {
+const navStartBtn = document.getElementById('navStartBtn');
+if (navStartBtn) {
+    navStartBtn.addEventListener('click', (e) => {
         e.preventDefault();
         scrollToSection('contact', 20);
-        navMenu.classList.remove('active');
-        document.body.classList.remove('no-scroll');
+        if (navMenu) {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
     });
 }
 
@@ -93,17 +95,17 @@ document.querySelectorAll('.form-type-option').forEach(option => {
             demoFields.style.display = 'none';
             submitBtn.textContent = 'Получить анализ за 24 часа';
             formNote.textContent = 'Отчёт придёт на email в течение 24 часов';
-            audioFile.setAttribute('required', '');
-            company.removeAttribute('required');
-            callVolume.removeAttribute('required');
+            if (audioFile) audioFile.setAttribute('required', '');
+            if (company) company.removeAttribute('required');
+            if (callVolume) callVolume.removeAttribute('required');
         } else {
             auditFields.style.display = 'none';
             demoFields.style.display = 'block';
             submitBtn.textContent = 'Записаться на демо';
             formNote.textContent = 'Перезвоним в течение 2 часов';
-            audioFile.removeAttribute('required');
-            company.setAttribute('required', '');
-            callVolume.setAttribute('required', '');
+            if (audioFile) audioFile.removeAttribute('required');
+            if (company) company.setAttribute('required', '');
+            if (callVolume) callVolume.setAttribute('required', '');
         }
     });
 });
@@ -126,7 +128,10 @@ document.getElementById('unifiedForm').addEventListener('submit', async function
         } else {
             // Send as JSON for demo
             const data = Object.fromEntries(formData);
-            delete data.audio; // Remove file field for demo
+            // Очистка от ненужных полей
+            delete data.audio;
+            delete data.formType;
+            
             response = await fetch('/api/send-demo', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -140,6 +145,25 @@ document.getElementById('unifiedForm').addEventListener('submit', async function
                 'Файл отправлен! Отчёт придёт в течение 24 часов' : 
                 'Заявка принята! Перезвоним в течение 2 часов';
             showNotification(message, 'success');
+            
+            // Analytics tracking
+            const eventName = formType === 'audit' ? 'audit_form_submit' : 'demo_form_submit';
+            const eventLabel = formType === 'audit' ? 'Бесплатный анализ' : 'Запись на демо';
+            
+            // Google Analytics 4
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventName, {
+                    'event_category': 'Form',
+                    'event_label': eventLabel,
+                    'value': 1
+                });
+            }
+            
+            // Yandex.Metrika
+            if (typeof ym !== 'undefined' && window.YM_COUNTER_ID) {
+                ym(window.YM_COUNTER_ID, 'reachGoal', eventName);
+            }
+            
             this.reset();
             // Reset file label
             const fileLabel = document.getElementById('fileLabel');
@@ -197,6 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (demoBtn) {
         demoBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // Analytics: CTA button click
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'cta_click', {
+                    'event_category': 'Button',
+                    'event_label': 'Hero - Получить анализ',
+                    'value': 1
+                });
+            }
+            if (typeof ym !== 'undefined' && window.YM_COUNTER_ID) {
+                ym(window.YM_COUNTER_ID, 'reachGoal', 'hero_cta_audit');
+            }
+            
             scrollToSection('contact');
         });
     }
@@ -204,6 +241,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (auditBtn) {
         auditBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // Analytics: Demo button click
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'demo_click', {
+                    'event_category': 'Button',
+                    'event_label': 'Hero - Смотреть демо',
+                    'value': 1
+                });
+            }
+            if (typeof ym !== 'undefined' && window.YM_COUNTER_ID) {
+                ym(window.YM_COUNTER_ID, 'reachGoal', 'hero_demo_view');
+            }
+            
             scrollToSection('demo-video');
         });
     }
@@ -229,13 +279,32 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const video = entry.target;
-                    const source = video.querySelector('source');
-                    if (source && source.dataset.src && !source.src) {
-                        source.src = source.dataset.src;
-                        video.load();
-                        video.addEventListener('canplay', () => { video.classList.add('loaded'); }, { once: true });
-                        video.play().catch(() => {});
+                    const container = video.closest('.demo-video-container');
+                    const poster = container ? container.querySelector('.video-poster') : null;
+                    
+                    // Обработчик клика по постеру для загрузки видео
+                    if (poster && !poster.dataset.clickHandlerAdded) {
+                        poster.dataset.clickHandlerAdded = 'true';
+                        poster.addEventListener('click', () => {
+                            const source = video.querySelector('source');
+                            if (source && source.dataset.src && !source.src) {
+                                // Показать loader
+                                if (container) container.classList.add('loading');
+                                
+                                // Загрузить видео
+                                source.src = source.dataset.src;
+                                video.load();
+                                
+                                video.addEventListener('canplay', () => { 
+                                    video.classList.add('loaded');
+                                    if (container) container.classList.remove('loading');
+                                    // Автоматически начать воспроизведение после загрузки
+                                    video.play().catch(() => {});
+                                }, { once: true });
+                            }
+                        });
                     }
+                    
                     videoLoader.unobserve(video);
                 }
             });

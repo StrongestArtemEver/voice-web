@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
+const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
@@ -11,8 +12,42 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Gzip compression для уменьшения размера передаваемых файлов
+app.use(compression());
+
 // Security & parsing
-app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: [
+                    "'self'",
+                    "'unsafe-inline'", // Для inline скриптов (GA, Метрика)
+                    "https://www.googletagmanager.com",
+                    "https://www.google-analytics.com",
+                    "https://mc.yandex.ru",
+                    "https://yandex.ru"
+                ],
+                imgSrc: [
+                    "'self'",
+                    "data:",
+                    "https:",
+                    "https://mc.yandex.ru",
+                    "https://www.google-analytics.com",
+                    "https://assets-v2.codedesign.ai" // Для внешних картинок
+                ],
+                connectSrc: [
+                    "'self'",
+                    "https://www.google-analytics.com",
+                    "https://mc.yandex.ru"
+                ],
+                styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+                fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"]
+            }
+        }
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,8 +62,26 @@ app.use(
 const limiter = rateLimit({ windowMs: 60 * 1000, max: 20 });
 app.use(limiter);
 
-// Static files
-app.use(express.static('public'));
+// Static files с кэшированием
+app.use(express.static('public', {
+    maxAge: '1y', // Кэш на 1 год для статических файлов
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, path) => {
+        // HTML файлы не кэшируем
+        if (path.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+        // CSS/JS/шрифты кэшируем на год
+        else if (path.match(/\.(css|js|woff2|woff|ttf)$/)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        // Изображения кэшируем на месяц
+        else if (path.match(/\.(jpg|jpeg|png|gif|svg|webp|avif)$/)) {
+            res.setHeader('Cache-Control', 'public, max-age=2592000');
+        }
+    }
+}));
 
 // Serve the landing page
 app.get('/', (req, res) => {
@@ -135,20 +188,22 @@ async function sendEmail({ to, subject, html, replyTo, attachments }) {
 app.post('/api/send-demo', async (req, res) => {
     try {
         const name = clean(req.body.name);
-        const company = clean(req.body.company);
+        const company = clean(req.body.company) || '';
         const email = clean(req.body.email);
         const phone = clean(req.body.phone);
+        const callVolume = clean(req.body.callVolume) || '';
 
-        if (!name || !company || !isEmail(email) || !phone) {
+        if (!name || !isEmail(email) || !phone) {
             return res.status(400).json({ ok: false, error: 'bad_request' });
         }
 
         const html = `
       <h2>Заявка на демо</h2>
       <p><b>Имя:</b> ${name}</p>
-      <p><b>Компания:</b> ${company}</p>
+      ${company ? `<p><b>Компания:</b> ${company}</p>` : ''}
       <p><b>Email:</b> ${email}</p>
       <p><b>Телефон:</b> ${phone}</p>
+      ${callVolume ? `<p><b>Объём звонков:</b> ${callVolume}</p>` : ''}
       <hr/>
       <p>Отправлено с сайта SmartLab.</p>
     `;

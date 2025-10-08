@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartLab - ИИ-контроль звонков</title>
+    
+    <!-- Preconnect для внешних ресурсов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://mc.yandex.ru">
+    
+    <!-- Критические inline стили для быстрой отрисовки -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,sans-serif;line-height:1.6;color:#333;overflow-x:hidden}
+        .header{background:#fff;border-bottom:1px solid rgba(0,0,0,.06);position:fixed;top:0;left:0;right:0;z-index:1000}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .hero{background:#f5faff;padding:120px 0 60px;min-height:100vh;display:flex;align-items:center}
+        .hero-title{font-size:52px;font-weight:600;color:#183B56;line-height:50px;margin-bottom:30px}
+        .btn{display:inline-block;padding:12px 30px;border-radius:36px;text-decoration:none;font-weight:700;font-size:16px;border:2px solid transparent;cursor:pointer;transition:all .3s ease}
+        .btn-primary{background:#1565d8;color:#fff;border-color:#1565d8}
+        @media (max-width:768px){.hero{padding:100px 0 40px}.hero-title{font-size:28px;line-height:36px}}
+    </style>
+    
+    <!-- Полные стили -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Шрифты с font-display: swap для быстрой отрисовки -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome - синхронная загрузка (нужна для иконок в hero) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="description" content="ИИ слушает 100% звонков, находит ошибки по 22 критериям и даёт готовые фразы. Отчёт по вашему звонку за 24 часа. +18–35% к выручке без найма.">
     <meta property="og:title" content="SmartLab — ИИ-контроль звонков">
@@ -13,6 +39,40 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hello.smart-lab.app/">
     <link rel="icon" href="/favicon.ico">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        // ВАЖНО: Замените XXXXXXXX на реальный номер счетчика Яндекс.Метрики
+        // Инструкция: см. ANALYTICS_SETUP.md
+        window.YM_COUNTER_ID = null; // Замените на: 12345678 (ваш номер счетчика)
+        
+        if (window.YM_COUNTER_ID) {
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            ym(window.YM_COUNTER_ID, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true,
+                trackHash:true
+            });
+        }
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
 </head>
 <body>
@@ -36,7 +96,7 @@
                     <a href="#pain">С чем поможем</a>
                     <a href="#solution">Как работает</a>
                     <a href="#faq">FAQ</a>
-                    <button class="btn btn-outline" onclick="scrollToSection('contact')">Начать бесплатно</button>
+                    <button class="btn btn-outline" id="navStartBtn">Начать бесплатно</button>
                 </div>
             </div>
         </div>
@@ -71,10 +131,10 @@
                         </div>
                     </div>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('contact')">
+                        <button class="btn btn-primary">
                             Получить анализ за 24 часа
                         </button>
-                        <button class="btn btn-secondary" onclick="scrollToSection('demo-video')">
+                        <button class="btn btn-secondary">
                             Смотреть демо 90 секунд
                         </button>
                     </div>
@@ -155,17 +215,24 @@
                 </p>
             </div>
             <div class="demo-video-container">
-                <!-- Здесь будет скринкаст работы сервиса -->
-                <div class="video-placeholder">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                        <circle cx="40" cy="40" r="40" fill="#1565d8" opacity="0.1"/>
-                        <path d="M32 25L55 40L32 55V25Z" fill="#1565d8"/>
-                    </svg>
-                    <p>Видео-демонстрация сервиса</p>
+                <!-- Lazy-load видео для оптимизации -->
+                <video 
+                    class="demo-video lazy-video" 
+                    controls 
+                    preload="none">
+                    <source data-src="demo-screencast.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+                <!-- Кастомный постер с иконкой Play -->
+                <div class="video-poster">
+                    <div class="play-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <circle cx="40" cy="40" r="40" fill="rgba(21, 101, 216, 0.9)"/>
+                            <path d="M32 25L55 40L32 55V25Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <p>Нажмите для просмотра демонстрации</p>
                 </div>
-                <!-- <video controls poster="demo-poster.jpg">
-                    <source src="demo-screencast.mp4" type="video/mp4">
-                </video> -->
             </div>
         </div>
     </section>
@@ -511,6 +578,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html> 
